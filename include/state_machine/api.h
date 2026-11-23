@@ -3,7 +3,6 @@
 
 #define VERSION_MAJOR 1
 #define VERSION_MINOR 0
-#define MAX_BUFFER_SIZE 4096
 
 /**
  * @brief All the status codes for this state machine

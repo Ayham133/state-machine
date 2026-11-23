@@ -10,7 +10,8 @@ typedef enum  {
     MAP_SUCCESS = 0,
     MAP_NULL_POINTER = -1,
     MAP_INVALID_PARAM = -2,
-    MAP_OUT_OF_MEMORY = -3
+    MAP_OUT_OF_MEMORY = -3,
+    MAP_EMPTY         = -4,
 }MapStatus;
 
 #ifdef __cplusplus
@@ -33,6 +34,15 @@ extern "C"{
     Map *init_map(void);
 
     /**
+     * @brief   get the size of the requested map
+     *
+     * @param mpa   the pointer to the requested map 
+     * @return      the size of the requested map
+     * @note    this function will return zero if the map is null
+     */
+    unsigned map_size(Map *map);
+
+    /**
      * @brief   add new entry to this map
      *
      * @param map   a pointer to the object map
@@ -42,7 +52,22 @@ extern "C"{
      * @return [int]    return status code
      * @note 
      */
-    int map_put(Map *map, char *key, char *value);
+    int map_put(Map *map, const char *state, const char *event, const char *next_state, const char *action_message);
+
+    /**
+     * @brief    get the requested entry from the passed key
+     *
+     * @param map   a pointer to the object map
+     * @param key   the key to the requested entry
+     * @param out_value  the place that will house the returned value
+     *
+     * @return [int]    return status code
+     * @note 
+     */
+    int map_get(Map *map, char *key, char *out_value);
+
+    //TODO: Implement this function
+    // Entry *map_get_entery_by_index(Map *map, unsigned index);
 
     /**
      * @brief   delete map object and clear the memory
