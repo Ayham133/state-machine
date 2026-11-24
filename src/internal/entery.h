@@ -8,20 +8,20 @@ extern "C"{
     /**
      * @brief  represent an entry that has <key, value> to a Map
      */
-    typedef struct Entry Entry;
+    typedef struct Entery Entery;
 
     /**
      *  @brief  initiate new entry
      */
-    Entry *init_entry(const char *state, const char *event, const char *next_state, const char *action_message);
+    Entery *init_entery(const char *state, const char *event, const char *next_state, const char *action_message);
 
-    char *entry_get_state(Entry *entry);
+    char *entery_get_state(Entery *entry);
 
-    char *entry_get_event(Entry *entry);
+    char *entery_get_event(Entery *entry);
 
-    char *entry_get_next_state(Entry *entry);
+    char *entery_get_next_state(Entery *entry);
 
-    char *entry_get_action_message(Entry *entry);
+    char *entery_get_action_message(Entery *entry);
 
     /**
      * @brief   delete this entry and clear the memeory
@@ -29,7 +29,7 @@ extern "C"{
      * @param entry    a pointer to the requested entry
      * @note
      */
-    void delete_entery(Entry **entry);
+    void delete_entery(Entery **entry);
 
 #ifdef __cplusplus
 }

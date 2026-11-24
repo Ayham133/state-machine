@@ -1,6 +1,8 @@
 #ifndef MAP_H
 #define MAP_H
 
+#include "entery.h"
+
 #define MAX_SIZE 100
 
 /**
@@ -12,6 +14,7 @@ typedef enum  {
     MAP_INVALID_PARAM = -2,
     MAP_OUT_OF_MEMORY = -3,
     MAP_EMPTY         = -4,
+    MAP_NOT_FOUND     = -5,
 }MapStatus;
 
 #ifdef __cplusplus
@@ -42,32 +45,32 @@ extern "C"{
      */
     unsigned map_size(Map *map);
 
+
     /**
      * @brief   add new entry to this map
      *
-     * @param map   a pointer to the object map
-     * @param key   the key for the new entry
-     * @param value the value of the new entry
+     * @param map       a pointer to the object map
+     * @param entery    a pointer to the entery
      *
      * @return [int]    return status code
      * @note 
      */
-    int map_put(Map *map, const char *state, const char *event, const char *next_state, const char *action_message);
+    int map_put(Map *map, Entery *entery);
 
     /**
      * @brief    get the requested entry from the passed key
      *
-     * @param map   a pointer to the object map
-     * @param key   the key to the requested entry
-     * @param out_value  the place that will house the returned value
+     * @param map       a pointer to the object map
+     * @param entery    a pointer to the requested entery
+     * @param out_value the place that will house the returned value
      *
      * @return [int]    return status code
      * @note 
      */
-    int map_get(Map *map, char *key, char *out_value);
+    int map_get(Map *map, Entery *entery, Entery *out_value);
 
     //TODO: Implement this function
-    // Entry *map_get_entery_by_index(Map *map, unsigned index);
+    // Entery *map_get_entery_by_index(Map *map, unsigned index);
 
     /**
      * @brief   delete map object and clear the memory

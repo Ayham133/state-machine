@@ -1,4 +1,4 @@
-#include "internal/entry.h"
+#include "internal/entery.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -8,92 +8,92 @@ typedef struct Vector{
 }Vector;
 
 /**
-* @brief  represent an entry that has <key, value> to a Map
+* @brief  represent an entery that has <key, value> to a Map
 */
-typedef struct Entry{
+typedef struct Entery{
     Vector key;
     Vector value;
-}Entry;
+}Entery;
 
 /**
 *
-*   @brief  initiate new entry
+*   @brief  initiate new entery
 *
 */
-Entry *init_entry(const char *state, const char *event, const char *next_state, const char *action_message)
+Entery *init_entery(const char *state, const char *event, const char *next_state, const char *action_message)
 {
-    Entry *new_entry = malloc(sizeof(Entry));
+    Entery *new_entery = malloc(sizeof(Entery));
 
-    if(new_entry == NULL)
+    if(new_entery == NULL)
         return NULL;
 
-    new_entry->key.status =    malloc(strlen(state) + 1);
-    new_entry->key.event_or_message =    malloc(strlen(event)+1);
-    new_entry->value.status =  malloc(strlen(next_state) + 1);
-    new_entry->value.event_or_message =  malloc(strlen(action_message) + 1);
+    new_entery->key.status =    malloc(strlen(state) + 1);
+    new_entery->key.event_or_message =    malloc(strlen(event)+1);
+    new_entery->value.status =  malloc(strlen(next_state) + 1);
+    new_entery->value.event_or_message =  malloc(strlen(action_message) + 1);
 
-    if(new_entry->key.status == NULL || new_entry->key.event_or_message == NULL ||
-        new_entry->value.status == NULL || new_entry->value.event_or_message == NULL)
+    if(new_entery->key.status == NULL || new_entery->key.event_or_message == NULL ||
+        new_entery->value.status == NULL || new_entery->value.event_or_message == NULL)
     {
-        delete_entery(&new_entry);
+        delete_entery(&new_entery);
         return NULL;
     }
 
-    strcpy(new_entry->key.status, state);
-    strcpy(new_entry->key.event_or_message, event);
-    strcpy(new_entry->value.status, next_state);
-    strcpy(new_entry->value.event_or_message, action_message);
+    strcpy(new_entery->key.status, state);
+    strcpy(new_entery->key.event_or_message, event);
+    strcpy(new_entery->value.status, next_state);
+    strcpy(new_entery->value.event_or_message, action_message);
 
-    return new_entry;
+    return new_entery;
 }
 
-char *entry_get_state(Entry *entry)
+char *entery_get_state(Entery *entery)
 {
-    if(entry == NULL || entry->key.status == NULL)
+    if(entery == NULL || entery->key.status == NULL)
         return NULL;
 
-    return entry->key.status;
+    return entery->key.status;
 }
 
-char *entry_get_event(Entry *entry)
+char *entery_get_event(Entery *entery)
 {
-    if(entry == NULL || entry->key.event_or_message == NULL)
+    if(entery == NULL || entery->key.event_or_message == NULL)
         return NULL;
 
-    return entry->key.event_or_message;
+    return entery->key.event_or_message;
 }
 
-char *entry_get_next_state(Entry *entry)
+char *entery_get_next_state(Entery *entery)
 {
-    if(entry == NULL || entry->value.status == NULL)
+    if(entery == NULL || entery->value.status == NULL)
         return NULL;
 
-    return entry->value.status;
+    return entery->value.status;
 }
 
-char *entry_get_action_message(Entry *entry)
+char *entery_get_action_message(Entery *entery)
 {
-    if(entry == NULL || entry->value.event_or_message == NULL)
+    if(entery == NULL || entery->value.event_or_message == NULL)
         return NULL;
 
-    return entry->value.event_or_message;
+    return entery->value.event_or_message;
 }
 
 /**
- * @brief   delete this entry and clear the memeory
+ * @brief   delete this entery and clear the memeory
  *
- * @param entry    a pointer to the requested entry
+ * @param entery    a pointer to the requested entry
  * @note
  */
-void delete_entery(Entry **entry)
+void delete_entery(Entery **entery)
 {
-    if (entry == NULL || *entry == NULL)
+    if (entery == NULL || *entery == NULL)
         return;
 
-    free((*entry)->key.event_or_message);
-    free((*entry)->key.status);
-    free((*entry)->value.status);
-    free((*entry)->value.event_or_message);
-    free((*entry));
-    entry = NULL;
+    free((*entery)->key.event_or_message);
+    free((*entery)->key.status);
+    free((*entery)->value.status);
+    free((*entery)->value.event_or_message);
+    free((*entery));
+    entery = NULL;
 }

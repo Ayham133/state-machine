@@ -2,13 +2,13 @@
 #include <string.h>
 
 #include "internal/map.h"
-#include "internal/entry.h"
+#include "internal/entery.h"
 
 /**
      * @brief   represent a colliction of entries
      */
 typedef struct Map{
-    Entry *entries[MAX_SIZE];
+    Entery *entries[MAX_SIZE];
     unsigned size;
 } Map;
 
@@ -55,24 +55,21 @@ unsigned map_size(Map *map)
 /**
      * @brief   add new entry to this map
      *
-     * @param map   a pointer to the object map
-     * @param key   the key for the new entry
-     * @param value the value of the new entry
+     * @param map       a pointer to the object map
+     * @param entery    a pointer to the entery
      *
      * @return [int]    return status code
-     * @note this fucntion will return MAP_NULL_POINTER code if the this map is null,
-     *       and this fucntion will return MAP_OUT_OF_MEMORY code if the map is full
+     * @note 
      */
-int map_put(Map *map, const char *state, const char *event, const char *next_state, const char *action_message)
+int map_put(Map *map, Entery *entery)
 {
-    if(map == NULL)
+    if(map == NULL || entery == NULL)
         return MAP_NULL_POINTER;
 
     if(map->size == (MAX_SIZE - 1))
         return MAP_OUT_OF_MEMORY;
 
-    Entry *new_entry = init_entry(state, event, next_state, action_message);
-    map->entries[map->size] = new_entry;
+    map->entries[map->size] = entery;
     map->size++;
 
     return MAP_SUCCESS;
@@ -81,29 +78,33 @@ int map_put(Map *map, const char *state, const char *event, const char *next_sta
 /**
      * @brief    get the requested entry from the passed key
      *
-     * @param map   a pointer to the object map
-     * @param key   the key to the requested entry
-     * @param out_value  the place that will house the returned value
+     * @param map       a pointer to the object map
+     * @param entery    a pointer to the requested entery
+     * @param out_value the place that will house the returned value
      *
      * @return [int]    return status code
      * @note 
      */
-int map_get(Map *map, char *key, char *out_value)
+int map_get(Map *map, Entery *entery, Entery *out_value)
 {
-    if(map == NULL) 
+    if(map == NULL || entery == NULL) 
         return MAP_NULL_POINTER;
 
     if(map->size == 0)
         return MAP_EMPTY;
 
-    if(key == NULL || strcmp(key, "") == 0)
-        return MAP_INVALID_PARAM;
 
-    // Loop through the entries, we are looking for matching event, which is in key.str2
+    // Loop through the entries, we are looking for matching enteries
     for (int i = 0; i < map->size; i++)
     {
-        if(entry_get_state(map->entries[i])) ;
+        if(strcmp(entery_get_state(entery), entery_get_state(map->entries[i])) == 0)
+        {
+            out_value = entery;
+            return MAP_SUCCESS;
+        }
     }
+
+    return MAP_NOT_FOUND;
 
 }
 
